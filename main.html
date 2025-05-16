@@ -4,266 +4,230 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NMSB - No More School Boredom</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
 <style>
-  /* Reset and base */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
   body {
-    margin: 0; padding: 0;
-    background-color: #0a1128;
-    color: #cbd5e1;
+    margin: 0; background-color: #0a1128; color: #a3cef1;
     font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
   }
-  nav {
-    background-color: #001f54;
-    padding: 10px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 10;
+  header {
+    background: #001f54;
+    padding: 12px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 100;
   }
-  nav h1 {
-    margin: 0; font-weight: 700; font-size: 1.5rem;
-    color: #f0f8ff;
+  header h1 {
+    margin: 0; font-weight: 600; font-size: 1.5rem;
   }
-  nav .nav-links {
-    display: flex; gap: 20px;
+  nav a {
+    color: #a3cef1; text-decoration: none;
+    margin-left: 18px;
+    font-weight: 500;
   }
-  nav .nav-links a {
-    color: #cbd5e1; text-decoration: none;
-    font-weight: 600; font-size: 1rem;
-  }
-  nav .nav-links a:hover {
-    color: #65a9ff;
-  }
-  .search-bar {
-    margin-left: 20px;
-  }
-  .search-bar input {
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+  nav a:hover {
+    text-decoration: underline;
   }
   #announcement {
-    background-color: #001f54;
-    padding: 15px 20px;
-    font-style: italic;
-    font-size: 1.1rem;
-  }
-  main {
-    flex: 1;
-    padding: 20px;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-  .game-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 15px;
-  }
-  .game-card {
     background: #001f54;
-    border-radius: 10px;
-    padding: 15px;
+    padding: 10px 20px;
+    font-style: italic;
+    font-size: 1rem;
+    border-bottom: 1px solid #0a1128;
+  }
+  #searchGames {
+    margin: 20px auto; max-width: 320px;
+    display: block;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+  }
+  #gamesList {
+    max-width: 720px;
+    margin: 0 auto 40px auto;
+    padding: 0 10px;
+  }
+  #gamesList ul {
+    list-style: none;
+    padding: 0;
+  }
+  #gamesList li {
+    background: #112d4e;
+    margin: 10px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
-    user-select: none;
   }
-  .game-card:hover {
-    background: #0047ab;
+  #gamesList li:hover {
+    background: #144272;
   }
-  .game-card h3 {
-    margin: 0 0 8px;
-    color: #f0f8ff;
+  #gamesList li a {
+    color: #a3cef1;
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
   }
-  .game-card p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #a3bffa;
-  }
-  /* Modal (popup) styles */
-  #studyGuideForm {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0,0.75);
-    align-items: center; justify-content: center;
-    z-index: 9999;
-  }
-  #studyGuideForm .form-container {
+  #studyGuideBtn {
+    display: block;
+    margin: 0 auto 40px auto;
+    padding: 12px 24px;
+    font-size: 1.1rem;
     background-color: #001f54;
+    border: none;
+    color: #a3cef1;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  /* Modal styles */
+  #studyGuideModal {
+    display: none; 
+    position: fixed; z-index: 200; left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(10, 17, 40, 0.9);
+  }
+  #studyGuideModalContent {
+    background-color: #001f54;
+    margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
     max-width: 400px;
-    width: 90%;
-    box-shadow: 0 0 15px #65a9ff;
+    color: #a3cef1;
   }
-  #studyGuideForm label {
+  #studyGuideModalContent label {
     display: block;
-    margin-top: 12px;
-    font-weight: 600;
+    margin: 12px 0 4px 0;
   }
-  #studyGuideForm input, #studyGuideForm textarea {
-    margin-top: 6px;
+  #studyGuideModalContent input[type=text] {
     width: 100%;
     padding: 8px;
     border-radius: 6px;
     border: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
   }
-  #studyGuideForm textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-  #studyGuideForm button {
-    margin-top: 15px;
-    padding: 10px 15px;
-    background-color: #65a9ff;
+  #studyGuideModalContent button {
+    margin-top: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
     border: none;
-    border-radius: 6px;
-    font-weight: 700;
-    color: #001f54;
     cursor: pointer;
-  }
-  #studyGuideForm button:hover {
-    background-color: #4c8be6;
-  }
-  #studyGuideForm .close-btn {
-    background: transparent;
-    color: #65a9ff;
     font-weight: 600;
-    cursor: pointer;
-    border: none;
-    font-size: 1.1rem;
+  }
+  #submitStudyGuide {
+    background-color: #0a1128;
+    color: #a3cef1;
+  }
+  #closeModal {
+    background-color: #a3cef1;
+    color: #001f54;
+    margin-left: 12px;
   }
 </style>
 </head>
 <body>
-<nav>
+<header>
   <h1>NMSB</h1>
-  <div class="nav-links">
-    <a href="#" id="showStudyGuideFormBtn">Submit Study Guide</a>
-    <a href="#games-section">Games</a>
-  </div>
-  <div class="search-bar">
-    <input type="search" id="gameSearch" placeholder="Search games..." />
-  </div>
-</nav>
+  <nav>
+    <a href="#gamesSection">Games</a>
+    <a href="#announcement">Announcements</a>
+    <a href="#" id="studyGuideBtn">Study Guides</a>
+  </nav>
+</header>
 
-<div id="announcement" aria-live="polite">
-  No announcements today.
-</div>
+<section id="announcement">
+  <!-- Announcement text set by JS -->
+</section>
 
-<main>
-  <section id="games-section" aria-label="Game List">
-    <div class="game-list" id="gameList">
-      <!-- Games will be inserted here by JS -->
-    </div>
-  </section>
-</main>
+<input type="search" id="searchGames" placeholder="Search games..." aria-label="Search games" />
 
-<!-- Study Guide Submission Form -->
-<div id="studyGuideForm" role="dialog" aria-modal="true" aria-labelledby="formTitle">
-  <div class="form-container">
-    <button class="close-btn" id="closeFormBtn" aria-label="Close form">&times;</button>
-    <h2 id="formTitle">Submit a Study Guide</h2>
-    <form id="submitStudyGuideForm">
-      <label for="guideTitle">Study Guide Title</label>
-      <input type="text" id="guideTitle" name="guideTitle" required />
-      <label for="teacherName">Teacher Name</label>
+<section id="gamesList" aria-label="List of games">
+  <ul id="gamesUL">
+    <!-- Games loaded by JS -->
+  </ul>
+</section>
+
+<!-- Study Guide Modal -->
+<div id="studyGuideModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div id="studyGuideModalContent">
+    <h2 id="modalTitle">Submit Study Guide</h2>
+    <form id="studyGuideForm" action="mailto:your-email@example.com" method="POST" enctype="text/plain">
+      <label for="studentName">Your Name:</label>
+      <input type="text" id="studentName" name="studentName" required />
+      <label for="teacherName">Teacher Name:</label>
       <input type="text" id="teacherName" name="teacherName" required />
-      <label for="yourName">Your Name</label>
-      <input type="text" id="yourName" name="yourName" required />
-      <label for="testDetails">Test Details</label>
-      <textarea id="testDetails" name="testDetails" required></textarea>
-      <button type="submit">Submit</button>
+      <label for="testTopic">Test Topic:</label>
+      <input type="text" id="testTopic" name="testTopic" required />
+      <button type="submit" id="submitStudyGuide">Send</button>
+      <button type="button" id="closeModal">Cancel</button>
     </form>
   </div>
 </div>
 
 <script>
-  // Game data (based on securly.mom and crazygames links - example placeholders)
+  // Games list (easily editable)
   const games = [
-    { title: "Fireboy and Watergirl", desc: "Classic puzzle platformer", url: "https://www.crazygames.com/game/fireboy-and-watergirl" },
-    { title: "Run 3", desc: "Endless runner in space tunnels", url: "https://www.crazygames.com/game/run-3" },
-    { title: "Moto X3M", desc: "Fast-paced bike racing", url: "https://www.crazygames.com/game/moto-x3m" },
-    { title: "Agar.io", desc: "Mass-eating multiplayer", url: "https://www.crazygames.com/game/agar-io" },
-    { title: "Slope", desc: "3D running and dodging", url: "https://www.crazygames.com/game/slope" },
-    // Add more games here
+    { name: 'Blocky Tower', url: 'https://securly.mom/game1' },
+    { name: 'Crazy Jump', url: 'https://crazygames.com/game2' },
+    { name: 'Maze Runner', url: 'https://securly.mom/game3' },
+    { name: 'Puzzle Quest', url: 'https://crazygames.com/game4' },
   ];
 
-  // Populate games on page load
-  const gameList = document.getElementById('gameList');
-  function displayGames(filter = '') {
-    gameList.innerHTML = '';
-    const filteredGames = games.filter(game =>
-      game.title.toLowerCase().includes(filter.toLowerCase())
-    );
-    if (filteredGames.length === 0) {
-      gameList.innerHTML = '<p>No games found.</p>';
+  // Announcement text (editable by you in dev site, hardcoded here for example)
+  let announcementText = "No announcements today."; // Change dynamically
+
+  // Populate announcement
+  const announcementEl = document.getElementById('announcement');
+  announcementEl.textContent = announcementText;
+
+  // Populate games list
+  const gamesUL = document.getElementById('gamesUL');
+  function displayGames(list) {
+    gamesUL.innerHTML = '';
+    if(list.length === 0) {
+      gamesUL.innerHTML = '<li>No games found.</li>';
       return;
     }
-    filteredGames.forEach(game => {
-      const card = document.createElement('div');
-      card.className = 'game-card';
-      card.tabIndex = 0;
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', `Play ${game.title}`);
-      card.innerHTML = `
-        <h3>${game.title}</h3>
-        <p>${game.desc}</p>
-      `;
-      card.addEventListener('click', () => openGame(game.url));
-      card.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') openGame(game.url);
-      });
-      gameList.appendChild(card);
+    list.forEach(game => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = game.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = game.name;
+      li.appendChild(a);
+      gamesUL.appendChild(li);
     });
   }
+  displayGames(games);
 
-  // Open game in new tab + fullscreen attempt
-  function openGame(url) {
-    // Open new window/tab
-    const newWindow = window.open(url, '_blank');
-    if (!newWindow) {
-      alert('Popup blocked! Please allow popups for this site.');
-      return;
-    }
-    // Try fullscreen on new window (may be blocked by browsers)
-    newWindow.onload = () => {
-      try {
-        newWindow.document.documentElement.requestFullscreen();
-      } catch(e) {
-        // ignore if not allowed
-      }
-    };
-  }
-
-  // Search input event
-  document.getElementById('gameSearch').addEventListener('input', (e) => {
-    displayGames(e.target.value);
+  // Search filter
+  const searchInput = document.getElementById('searchGames');
+  searchInput.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase();
+    const filtered = games.filter(g => g.name.toLowerCase().includes(term));
+    displayGames(filtered);
   });
 
-  displayGames();
-
-  // Show/hide study guide form
+  // Study guide modal logic
+  const modal = document.getElementById('studyGuideModal');
+  const studyGuideBtn = document.getElementById('studyGuideBtn');
+  const closeModalBtn = document.getElementById('closeModal');
   const studyGuideForm = document.getElementById('studyGuideForm');
-  document.getElementById('showStudyGuideFormBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    studyGuideForm.style.display = 'flex';
+
+  studyGuideBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
   });
-  document.getElementById('closeFormBtn').addEventListener('click', () => {
-    studyGuideForm.style.display = 'none';
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
   });
-  // Submit study guide form
-  document.getElementById('submitStudyGuideForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Thank you for submitting your study guide! (Functionality to store it coming soon)');
-    studyGuideForm.style.display = 'none';
-    e.target.reset();
+
+  // Close modal if clicked outside form content
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
   });
+
+  // Simple mailto form submission fallback handled by browser for "mailto:" action
+
 </script>
 </body>
 </html>
