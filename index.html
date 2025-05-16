@@ -1,315 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NMSB - No More School Boredom</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-<style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #0b1220;
-    color: #e0e6f1;
-  }
-  nav {
-    background: #14213d;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  nav h1 {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.6rem;
-    color: #8ab4f8;
-    cursor: default;
-  }
-  nav .nav-links {
-    display: flex;
-    gap: 25px;
-  }
-  nav .nav-links button {
-    background: transparent;
-    border: none;
-    color: #8ab4f8;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  nav .nav-links button:hover {
-    color: #ffd166;
-  }
-  #announcement {
-    background: #1f2a47;
-    padding: 10px 20px;
-    font-style: italic;
-    font-size: 1rem;
-    border-bottom: 1px solid #274060;
-  }
-  .content {
-    max-width: 900px;
-    margin: 25px auto;
-    padding: 0 20px;
-  }
-  h2 {
-    color: #8ab4f8;
-  }
-  /* Search bars styling */
-  input[type="search"] {
-    width: 100%;
-    max-width: 400px;
-    padding: 8px 12px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-  }
-  /* Game list styling */
-  #game-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  .game-item {
-    background: #14213d;
-    padding: 15px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    flex: 1 1 150px;
-    text-align: center;
-    color: #8ab4f8;
-    user-select: none;
-    transition: background-color 0.2s ease;
-  }
-  .game-item:hover {
-    background: #274060;
-  }
-  /* User list */
-  #user-list {
-    max-height: 250px;
-    overflow-y: auto;
-    background: #1f2a47;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  #user-list div {
-    padding: 8px;
-    border-bottom: 1px solid #274060;
-    cursor: pointer;
-  }
-  #user-list div:hover {
-    background: #274060;
-  }
-  /* Modal styles for study guide form */
-  #study-guide-modal {
-    display: none;
-    position: fixed;
-    z-index: 99;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background: rgba(11, 18, 32, 0.9);
-    justify-content: center;
-    align-items: center;
-  }
-  #study-guide-modal form {
-    background: #14213d;
-    padding: 20px 25px;
-    border-radius: 8px;
-    width: 320px;
-    box-sizing: border-box;
-  }
-  #study-guide-modal label {
-    display: block;
-    margin-bottom: 5px;
-    margin-top: 15px;
-  }
-  #study-guide-modal input, #study-guide-modal textarea {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-  #study-guide-modal button {
-    margin-top: 20px;
-    background: #8ab4f8;
-    color: #0b1220;
-    font-weight: 600;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-  }
-  #study-guide-modal button:hover {
-    background: #ffd166;
-  }
-  #modal-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
-    color: #ffd166;
-    cursor: pointer;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NMSB Password</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #121212;
+      color: white;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .password-container {
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+      width: 300px;
+      text-align: center;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 1rem;
+      border-radius: 4px;
+      border: none;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error {
+      color: #ff4d4d;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-
-<nav>
-  <h1>NMSB</h1>
-  <div class="nav-links">
-    <button id="open-study-guide">Study Guide Request</button>
-  </div>
-</nav>
-
-<div id="announcement" aria-live="polite">Loading announcement...</div>
-
-<div class="content">
-  <h2>Search Games</h2>
-  <input type="search" id="game-search" placeholder="Search games..." />
-
-  <div id="game-list">
-    <!-- Game items populated by JS -->
+  <div class="password-container">
+    <h2>Enter Password</h2>
+    <input id="passwordInput" type="password" placeholder="Password" />
+    <button onclick="checkPassword()">Submit</button>
+    <div id="errorMsg" class="error"></div>
   </div>
 
-  <h2>User List</h2>
-  <input type="search" id="user-search" placeholder="Search users..." />
-  <div id="user-list">
-    <!-- User items populated by JS -->
-  </div>
-</div>
+  <script>
+    const correctPassword = "yourPasswordHere"; // Change to your real password
+    const blockedUsers = ["blockedUser1@example.com"]; // Example blocked users
+    
+    function checkPassword() {
+      const password = document.getElementById('passwordInput').value;
+      const errorMsg = document.getElementById('errorMsg');
 
-<!-- Study Guide Request Modal -->
-<div id="study-guide-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-  <div>
-    <span id="modal-close" aria-label="Close modal" tabindex="0">&times;</span>
-    <form id="study-guide-form">
-      <h3 id="modal-title">Submit Study Guide Request</h3>
-      <label for="sg-name">Your Name</label>
-      <input id="sg-name" name="name" type="text" required />
-
-      <label for="sg-teacher">Teacher Name</label>
-      <input id="sg-teacher" name="teacher" type="text" required />
-
-      <label for="sg-test">What is the test on?</label>
-      <textarea id="sg-test" name="test" rows="3" required></textarea>
-
-      <label for="sg-guide">Study Guide Name</label>
-      <input id="sg-guide" name="guide" type="text" required />
-
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-</div>
-
-<script>
-  // Announcement (would be dynamic from backend or storage)
-  const announcementEl = document.getElementById('announcement');
-  // Placeholder announcement text:
-  const announcementText = "No announcements today.";
-  announcementEl.textContent = announcementText;
-
-  // Dummy game list based on securly.mom / crazygames style links (replace URLs with your working proxies)
-  const games = [
-    { name: "Agar.io", url: "https://securlyproxy.example.com/agar.io" },
-    { name: "Slither.io", url: "https://securlyproxy.example.com/slither.io" },
-    { name: "Krunker", url: "https://securlyproxy.example.com/krunker.io" },
-    { name: "Shell Shockers", url: "https://securlyproxy.example.com/shellshockers" },
-    { name: "Paper.io 2", url: "https://securlyproxy.example.com/paperio2" },
-  ];
-
-  const gameListEl = document.getElementById('game-list');
-  const gameSearchEl = document.getElementById('game-search');
-
-  function displayGames(filter="") {
-    gameListEl.innerHTML = "";
-    const filteredGames = games.filter(g => g.name.toLowerCase().includes(filter.toLowerCase()));
-    filteredGames.forEach(game => {
-      const div = document.createElement('div');
-      div.className = 'game-item';
-      div.textContent = game.name;
-      div.onclick = () => {
-        // Open game in new tab
-        window.open(game.url, '_blank');
-      };
-      gameListEl.appendChild(div);
-    });
-  }
-  displayGames();
-
-  gameSearchEl.addEventListener('input', e => {
-    displayGames(e.target.value);
-  });
-
-  // Dummy users (replace with actual user data from backend or storage)
-  const users = [
-    { email: "friend1@example.com", blocked: false },
-    { email: "friend2@example.com", blocked: true },
-    { email: "friend3@example.com", blocked: false },
-  ];
-  const userListEl = document.getElementById('user-list');
-  const userSearchEl = document.getElementById('user-search');
-
-  function displayUsers(filter="") {
-    userListEl.innerHTML = "";
-    const filteredUsers = users.filter(u => u.email.toLowerCase().includes(filter.toLowerCase()));
-    filteredUsers.forEach(user => {
-      const div = document.createElement('div');
-      div.textContent = user.email + (user.blocked ? " (Blocked)" : "");
-      div.onclick = () => {
-        if (user.blocked) {
-          if(confirm(`Unblock this user?\n${user.email}`)) {
-            user.blocked = false;
-            displayUsers(userSearchEl.value);
-          }
-        } else {
-          if(confirm(`Block this user?\n${user.email}`)) {
-            user.blocked = true;
-            displayUsers(userSearchEl.value);
-          }
+      if(password === correctPassword) {
+        // Check if user is blocked - for demo, using prompt for email
+        let userEmail = prompt("Enter your email for verification:");
+        if(blockedUsers.includes(userEmail)) {
+          window.location.href = 'restriction.html'; // Redirect blocked users
+          return;
         }
-      };
-      userListEl.appendChild(div);
-    });
-  }
-  displayUsers();
 
-  userSearchEl.addEventListener('input', e => {
-    displayUsers(e.target.value);
-  });
-
-  // Study Guide Modal Logic
-  const modal = document.getElementById('study-guide-modal');
-  const openModalBtn = document.getElementById('open-study-guide');
-  const closeModalBtn = document.getElementById('modal-close');
-  const form = document.getElementById('study-guide-form');
-
-  openModalBtn.onclick = () => {
-    modal.style.display = "flex";
-  };
-  closeModalBtn.onclick = () => {
-    modal.style.display = "none";
-  };
-  closeModalBtn.onkeydown = (e) => {
-    if(e.key === "Enter" || e.key === " ") {
-      modal.style.display = "none";
+        window.location.href = 'index.html'; // Redirect to main page if okay
+      } else {
+        errorMsg.textContent = "Incorrect password, try again.";
+      }
     }
-  };
-  window.onclick = (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  };
-
-  form.onsubmit = (e) => {
-    e.preventDefault();
-    alert("Study guide request submitted! Thank you.");
-    form.reset();
-    modal.style.display = "none";
-  };
-</script>
+  </script>
 </body>
 </html>
