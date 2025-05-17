@@ -7,66 +7,82 @@
 <style>
   body {
     font-family: 'Poppins', sans-serif;
-    background: #121212;
-    color: white;
+    background: #222;
+    color: #eee;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     margin: 0;
   }
-  .container {
-    text-align: center;
-    background: #1e1e1e;
-    padding: 2rem;
-    border-radius: 10px;
-    width: 300px;
-  }
-  input[type="password"] {
-    width: 100%;
+  input {
     padding: 10px;
-    margin: 1rem 0;
+    font-size: 1.2em;
+    margin: 10px 0;
+    width: 220px;
     border-radius: 5px;
     border: none;
-    font-size: 1.1rem;
   }
   button {
-    padding: 10px 20px;
-    background: #007bff;
+    padding: 10px 25px;
+    font-size: 1.2em;
+    background: #00bfff;
     border: none;
     border-radius: 5px;
-    color: white;
-    font-weight: 600;
+    color: #fff;
     cursor: pointer;
-    width: 100%;
   }
   button:hover {
-    background: #0056b3;
+    background: #0099cc;
+  }
+  #message {
+    margin-top: 15px;
+    color: #ff6666;
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <h2>Enter Password</h2>
-  <input id="passwordInput" type="password" placeholder="Enter password" autofocus />
-  <button onclick="checkPassword()">Submit</button>
-</div>
+<h2>Enter Password</h2>
+<input type="password" id="password" placeholder="6-digit password" maxlength="6" />
+<button id="submitBtn">Submit</button>
+<div id="message"></div>
 
 <script>
-function checkPassword() {
-  const pw = document.getElementById('passwordInput').value.trim();
-  if (pw === '246810') {
-    // Normal user - go to main page
-    window.location.href = 'main.html';
-  } else if (pw === '984984') {
-    // Dev user - open dev page in new tab
-    window.open('dev.html', '_blank');
-  } else {
-    alert('Password incorrect');
-    document.getElementById('passwordInput').value = '';
-    document.getElementById('passwordInput').focus();
-  }
-}
+  const mainPassword = "246810";  // main password (6-digit)
+  const devPassword = "984984";   // dev password (6-digit)
+  const secondFactorCode = "9359"; // 2FA code (4-digit)
+
+  const passwordInput = document.getElementById('password');
+  const submitBtn = document.getElementById('submitBtn');
+  const messageDiv = document.getElementById('message');
+
+  submitBtn.addEventListener('click', () => {
+    const entered = passwordInput.value.trim();
+    messageDiv.textContent = "";
+
+    if (entered === mainPassword) {
+      // normal user: redirect to main.html
+      window.location.href = "main.html";
+    } else if (entered === devPassword) {
+      // dev user: prompt for 2FA code
+      const twoFactor = prompt("Enter 4-digit 2FA code:");
+      if (twoFactor === secondFactorCode) {
+        window.location.href = "dev.html";
+      } else {
+        messageDiv.textContent = "Incorrect 2FA code.";
+      }
+    } else {
+      messageDiv.textContent = "Incorrect password.";
+    }
+
+    passwordInput.value = "";
+  });
+
+  // Optional: allow pressing Enter to submit
+  passwordInput.addEventListener('keypress', (e) => {
+    if (e.key === "Enter") submitBtn.click();
+  });
 </script>
 </body>
 </html>
