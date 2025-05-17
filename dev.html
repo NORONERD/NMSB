@@ -1,300 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NMSB Dev Page</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-<style>
-  body {
-    margin: 0; padding: 0;
-    background-color: #0a1128;
-    color: #cbd5e1;
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-  }
-  nav {
-    background-color: #001f54;
-    padding: 10px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 10;
-  }
-  nav h1 {
-    margin: 0; font-weight: 700; font-size: 1.5rem;
-    color: #f0f8ff;
-  }
-  main {
-    flex: 1;
-    padding: 20px;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-  h2 {
-    color: #65a9ff;
-  }
-  .user-list {
-    margin-bottom: 30px;
-  }
-  .user-item {
-    background: #001f54;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .user-email {
-    font-weight: 600;
-  }
-  .btn {
-    background-color: #65a9ff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-weight: 700;
-    color: #001f54;
-    transition: background-color 0.3s ease;
-  }
-  .btn:hover {
-    background-color: #4c8be6;
-  }
-  #announcementBox {
-    width: 100%;
-    min-height: 80px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    resize: vertical;
-    margin-bottom: 10px;
-    background-color: #001f54;
-    color: #cbd5e1;
-  }
-  .form-group {
-    margin-bottom: 20px;
-  }
-  label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-  input[type="password"] {
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: none;
-    width: 200px;
-  }
-  .flex-row {
-    display: flex; gap: 10px; align-items: center;
-  }
-  /* Confirmation popup */
-  #confirmPopup {
-    display: none;
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.75);
-    align-items: center; justify-content: center;
-    z-index: 10000;
-  }
-  #confirmPopup .popup-content {
-    background: #001f54;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 350px;
-    text-align: center;
-    box-shadow: 0 0 20px #65a9ff;
-  }
-  #confirmPopup button {
-    margin: 10px;
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  #confirmYes {
-    background-color: #65a9ff;
-    color: #001f54;
-  }
-  #confirmNo {
-    background-color: #444c5c;
-    color: #cbd5e1;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Developer Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b1e3b;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background-color: #142a4f;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+    }
+    .section {
+      background: #11294b;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    h3 {
+      margin-top: 0;
+    }
+    input[type="text"], input[type="password"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #0077ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    button:hover {
+      background-color: #005fcc;
+    }
+    .user {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1e3a63;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
+  <nav>Developer Dashboard</nav>
+  <div class="container">
 
-<nav>
-  <h1>Dev Panel</h1>
-</nav>
-
-<main>
-  <section class="user-list" aria-label="User List">
-    <h2>Users</h2>
-    <div id="usersContainer">
-      <!-- Users loaded here -->
+    <div class="section">
+      <h3>Daily Announcement</h3>
+      <textarea rows="3" placeholder="Enter announcement...">No announcements today.</textarea><br>
+      <button onclick="alert('Announcement updated!')">Update Announcement</button>
     </div>
-  </section>
 
-  <section aria-label="Daily Announcement">
-    <h2>Daily Announcement</h2>
-    <textarea id="announcementBox" placeholder="Enter today's announcement here...">No announcements today.</textarea>
-    <div class="flex-row">
-      <button class="btn" id="saveAnnouncementBtn">Save Announcement</button>
-      <button class="btn" id="resetAnnouncementBtn">Reset</button>
+    <div class="section">
+      <h3>Change Main Password</h3>
+      <input type="password" placeholder="Enter new 6-digit password" />
+      <button onclick="alert('Password updated!')">Change Password</button>
     </div>
-  </section>
 
-  <section aria-label="Change Password" style="margin-top: 40px;">
-    <h2>Change Password</h2>
-    <form id="changePasswordForm" class="flex-row">
-      <input type="password" id="newPassword" placeholder="Enter new password" required />
-      <button class="btn" type="submit">Change</button>
-    </form>
-    <p id="passwordMsg" style="margin-top:10px; color:#65a9ff;"></p>
-  </section>
-</main>
+    <div class="section">
+      <h3>User List</h3>
+      <input type="text" placeholder="Search by email..." />
+      <div class="user">
+        <span>user@example.com</span>
+        <button onclick="confirm('Block this user?') ? alert('User blocked!') : null">Block</button>
+      </div>
+      <div class="user">
+        <span>friend@example.com</span>
+        <button onclick="confirm('Unblock this user?') ? alert('User unblocked!') : null">Unblock</button>
+      </div>
+    </div>
 
-<!-- Confirmation Popup -->
-<div id="confirmPopup" role="dialog" aria-modal="true" aria-labelledby="confirmMessage">
-  <div class="popup-content">
-    <p id="confirmMessage"></p>
-    <button id="confirmYes">Yes</button>
-    <button id="confirmNo">No</button>
   </div>
-</div>
-
-<script>
-  // Dummy user data - replace with real data or API calls
-  const users = [
-    { email: "alice@example.com", blocked: false },
-    { email: "bob@example.com", blocked: true },
-    { email: "charlie@example.com", blocked: false },
-  ];
-
-  const usersContainer = document.getElementById('usersContainer');
-  const confirmPopup = document.getElementById('confirmPopup');
-  const confirmMessage = document.getElementById('confirmMessage');
-  const confirmYes = document.getElementById('confirmYes');
-  const confirmNo = document.getElementById('confirmNo');
-
-  let pendingAction = null; // will store { type, email } for confirm dialog
-
-  function renderUsers() {
-    usersContainer.innerHTML = '';
-    users.forEach(user => {
-      const userDiv = document.createElement('div');
-      userDiv.className = 'user-item';
-      userDiv.innerHTML = `
-        <span class="user-email">${user.email}</span>
-        <button class="btn" data-email="${user.email}">
-          ${user.blocked ? 'Unblock' : 'Block'}
-        </button>
-      `;
-      usersContainer.appendChild(userDiv);
-
-      const btn = userDiv.querySelector('button');
-      btn.addEventListener('click', () => {
-        const action = user.blocked ? 'Unblock' : 'Block';
-        confirmAction(action, user.email);
-      });
-    });
-  }
-
-  function confirmAction(action, email) {
-    confirmMessage.textContent = `${action} this user (${email})?`;
-    confirmPopup.style.display = 'flex';
-    pendingAction = { action, email };
-  }
-
-  confirmYes.addEventListener('click', () => {
-    if (pendingAction) {
-      const { action, email } = pendingAction;
-      const user = users.find(u => u.email === email);
-      if (user) {
-        user.blocked = (action === 'Block');
-        alert(`${action}ed user: ${email}`);
-        renderUsers();
-      }
-    }
-    confirmPopup.style.display = 'none';
-    pendingAction = null;
-  });
-
-  confirmNo.addEventListener('click', () => {
-    confirmPopup.style.display = 'none';
-    pendingAction = null;
-  });
-
-  // Announcement save/reset handlers
-  const announcementBox = document.getElementById('announcementBox');
-  const saveBtn = document.getElementById('saveAnnouncementBtn');
-  const resetBtn = document.getElementById('resetAnnouncementBtn');
-
-  saveBtn.addEventListener('click', () => {
-    const text = announcementBox.value.trim();
-    if (!text) {
-      alert('Announcement cannot be empty.');
-      return;
-    }
-    alert('Announcement saved! (You can integrate backend storage here.)');
-  });
-
-  resetBtn.addEventListener('click', () => {
-    announcementBox.value = 'No announcements today.';
-  });
-
-  // Change password form
-  const changePasswordForm = document.getElementById('changePasswordForm');
-  const passwordMsg = document.getElementById('passwordMsg');
-  changePasswordForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const newPassword = document.getElementById('newPassword').value.trim();
-    if (newPassword.length < 4) {
-      passwordMsg.textContent = 'Password must be at least 4 characters.';
-      return;
-    }
-    passwordMsg.textContent = '';
-    alert('Password changed! (Integrate real backend update here.)');
-    changePasswordForm.reset();
-  });
-
-  // Secondary auth prompt (code: 9359)
-  function requestAuth() {
-    let attempts = 3;
-    function askCode() {
-      const input = prompt('Enter 4-digit dev access code:');
-      if (input === null) {
-        alert('Access denied. Redirecting...');
-        window.location.href = 'password.html'; // redirect to password page
-        return;
-      }
-      if (input === '9359') {
-        // Access granted
-        return;
-      } else {
-        attempts--;
-        if (attempts > 0) {
-          alert(`Incorrect code. You have ${attempts} attempt(s) left.`);
-          askCode();
-        } else {
-          alert('Access denied. Redirecting...');
-          window.location.href = 'password.html';
-        }
-      }
-    }
-    askCode();
-  }
-
-  // Run auth check on page load
-  window.onload = () => {
-    requestAuth();
-    renderUsers();
-  };
-</script>
-
 </body>
 </html>
