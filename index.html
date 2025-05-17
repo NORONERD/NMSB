@@ -1,88 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Password Page</title>
-<style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: #222;
-    color: #eee;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
-  input {
-    padding: 10px;
-    font-size: 1.2em;
-    margin: 10px 0;
-    width: 220px;
-    border-radius: 5px;
-    border: none;
-  }
-  button {
-    padding: 10px 25px;
-    font-size: 1.2em;
-    background: #00bfff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #0099cc;
-  }
-  #message {
-    margin-top: 15px;
-    color: #ff6666;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No More School Boredom</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b1d3a;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    input {
+      width: 250px;
+    }
+    button {
+      background-color: #1c4d8a;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #376da9;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-<h2>Enter Password</h2>
-<input type="password" id="password" placeholder="6-digit password" maxlength="6" />
-<button id="submitBtn">Submit</button>
-<div id="message"></div>
+  <h1>Enter Password</h1>
+  <input type="password" id="password" placeholder="6-digit password" />
+  <button onclick="checkPassword()">Submit</button>
 
-<script>
-  const mainPassword = "246810";  // main password (6-digit)
-  const devPassword = "984984";   // dev password (6-digit)
-  const secondFactorCode = "9359"; // 2FA code (4-digit)
+  <div id="dev2fa" class="hidden">
+    <h2>Enter 4-digit Dev Code</h2>
+    <input type="password" id="code" placeholder="4-digit code" />
+    <button onclick="verifyDevCode()">Continue</button>
+  </div>
 
-  const passwordInput = document.getElementById('password');
-  const submitBtn = document.getElementById('submitBtn');
-  const messageDiv = document.getElementById('message');
-
-  submitBtn.addEventListener('click', () => {
-    const entered = passwordInput.value.trim();
-    messageDiv.textContent = "";
-
-    if (entered === mainPassword) {
-      // normal user: redirect to main.html
-      window.location.href = "main.html";
-    } else if (entered === devPassword) {
-      // dev user: prompt for 2FA code
-      const twoFactor = prompt("Enter 4-digit 2FA code:");
-      if (twoFactor === secondFactorCode) {
-        window.location.href = "dev.html";
+  <script>
+    function checkPassword() {
+      const password = document.getElementById("password").value;
+      if (password === "246810") {
+        window.location.href = "main.html";
+      } else if (password === "984984") {
+        document.getElementById("dev2fa").classList.remove("hidden");
       } else {
-        messageDiv.textContent = "Incorrect 2FA code.";
+        alert("Incorrect password");
       }
-    } else {
-      messageDiv.textContent = "Incorrect password.";
     }
 
-    passwordInput.value = "";
-  });
-
-  // Optional: allow pressing Enter to submit
-  passwordInput.addEventListener('keypress', (e) => {
-    if (e.key === "Enter") submitBtn.click();
-  });
-</script>
+    function verifyDevCode() {
+      const code = document.getElementById("code").value;
+      if (code === "9359") {
+        window.location.href = "dev.html";
+      } else {
+        alert("Incorrect dev code");
+      }
+    }
+  </script>
 </body>
 </html>
