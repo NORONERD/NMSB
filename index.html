@@ -2,77 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>No More School Boredom</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | NMSB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #0b1d3a;
-      color: #ffffff;
+      background: #0a0f2c;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      flex-direction: column;
     }
-    h1 {
-      margin-bottom: 20px;
-    }
-    input, button {
-      padding: 12px;
-      font-size: 16px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 5px;
+    .container {
+      background: #121a3a;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0ff;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
     input {
-      width: 250px;
+      width: 100%;
+      padding: 12px;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
     }
     button {
-      background-color: #1c4d8a;
-      color: white;
+      margin-top: 1rem;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: #0070f3;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #376da9;
-    }
-    .hidden {
+    #twofa {
       display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Enter Password</h1>
-  <input type="password" id="password" placeholder="6-digit password" />
-  <button onclick="checkPassword()">Submit</button>
-
-  <div id="dev2fa" class="hidden">
-    <h2>Enter 4-digit Dev Code</h2>
-    <input type="password" id="code" placeholder="4-digit code" />
-    <button onclick="verifyDevCode()">Continue</button>
+  <div class="container">
+    <h2>Enter Password</h2>
+    <input type="password" id="password" placeholder="6-digit password" maxlength="6"/>
+    <input type="password" id="twofa" placeholder="Enter 4-digit dev code" maxlength="4"/>
+    <button onclick="submitPassword()">Submit</button>
+    <p id="msg"></p>
   </div>
 
   <script>
-    function checkPassword() {
-      const password = document.getElementById("password").value;
-      if (password === "246810") {
-        window.location.href = "main.html";
-      } else if (password === "984984") {
-        document.getElementById("dev2fa").classList.remove("hidden");
-      } else {
-        alert("Incorrect password");
-      }
-    }
+    const NORMAL_PASS = "246810";
+    const DEV_PASS = "984984";
+    const DEV_2FA = "9359";
 
-    function verifyDevCode() {
-      const code = document.getElementById("code").value;
-      if (code === "9359") {
-        window.location.href = "dev.html";
+    function submitPassword() {
+      const pass = document.getElementById("password").value;
+      const code = document.getElementById("twofa").value;
+      const msg = document.getElementById("msg");
+
+      if (pass === NORMAL_PASS) {
+        window.open("main.html", "_blank");
+      } else if (pass === DEV_PASS) {
+        document.getElementById("twofa").style.display = "block";
+        if (code === DEV_2FA) {
+          window.open("dev.html", "_blank");
+        } else if (code.length > 0) {
+          msg.textContent = "Incorrect 2FA code.";
+        }
       } else {
-        alert("Incorrect dev code");
+        msg.textContent = "Incorrect password.";
       }
     }
   </script>
